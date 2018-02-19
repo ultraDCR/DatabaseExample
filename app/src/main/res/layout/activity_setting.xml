@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context="com.example.ranjan.databaseexample.SettingActivity">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="190dp"
+        android:layout_height="190dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        android:src="@drawable/avatar1"
+        android:id="@+id/circleImageView" />
+
+    <Button
+        android:id="@+id/setting_image_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/setting_status_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
+        android:text="   CHANGE IMAGE   "
+        android:textColor="@color/colorPrimaryDark" />
+
+    <Button
+        android:id="@+id/setting_status_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="39dp"
+        android:paddingLeft="10dp"
+        android:background="@color/colorAccent"
+        android:text="   CHANGE STATUS   "
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/setting_display_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/circleImageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="26dp"
+        android:text="Display Name"
+        android:textColor="@color/white"
+        android:textSize="30dp" />
+
+    <TextView
+        android:id="@+id/setting_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/setting_display_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="21dp"
+        android:text="@string/sefault_status"
+        android:textColor="@color/white"
+        android:textSize="15dp" />
+
+</RelativeLayout>
