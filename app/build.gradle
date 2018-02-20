@@ -39,8 +39,27 @@ dependencies {
     compile 'com.theartofdev.edmodo:android-image-cropper:2.4.+'
     compile 'com.android.support:support-annotations:27.0.2'
     compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.squareup.okhttp:okhttp:2.5.0'
+    compile 'com.google.firebase:firebase-messaging:11.8.0'
+
+    //compressorr for offline save
+    compile 'id.zelory:compressor:2.1.0'
+
+    // FirebaseUI for Firebase Realtime Database
+    implementation 'com.firebaseui:firebase-ui-database:3.1.3'
+
+// FirebaseUI for Cloud Firestore
+    implementation 'com.firebaseui:firebase-ui-firestore:3.1.3'
+
+// FirebaseUI for Firebase Auth
+    implementation 'com.firebaseui:firebase-ui-auth:3.1.3'
+
+// FirebaseUI for Cloud Storage
+    implementation 'com.firebaseui:firebase-ui-storage:3.1.3'
+
 
 }
+
 
 
 

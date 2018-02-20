@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context="com.example.ranjan.databaseexample.UsersActivity">
 
-    <include layout="@layout/toolbar_layout" android:id="@+id/users_toolBar"/>
+    <include
+        android:id="@+id/users_toolBar"
+        layout="@layout/toolbar_layout" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/users_list"

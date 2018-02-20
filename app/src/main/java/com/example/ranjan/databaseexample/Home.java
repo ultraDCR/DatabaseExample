@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.time.Instant;
 import java.util.ArrayList;
 
 public class Home extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
@@ -90,6 +91,8 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
                 break;
 
             case R.id.users:
+                Intent userIntent = new Intent(Home.this,UsersActivity.class);
+                startActivity(userIntent);
                 break;
 
 
