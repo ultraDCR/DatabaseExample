@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:name=".MyApp"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".FirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
         <activity android:name=".Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +46,12 @@
             android:parentActivityName=".Home"
             android:theme="@style/NewTheme" />
         <activity android:name=".ProfileActivity"
-            android:theme="@style/NewTheme"></activity>
+            android:theme="@style/NewTheme">
+            <intent-filter>
+                <action android:name="in.ranjan.databaseexample_TARGET_NOTIFICATION"></action>
+                <category android:name="android.intent.category.DEFAULT"></category>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

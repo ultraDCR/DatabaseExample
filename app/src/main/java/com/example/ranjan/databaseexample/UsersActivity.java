@@ -47,7 +47,6 @@ public class UsersActivity extends AppCompatActivity {
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("user");
         mUserDatabase.keepSynced(true);
-        query = FirebaseDatabase.getInstance().getReference().child("user");
 
         mUserList = (RecyclerView) findViewById(R.id.users_list);
         mUserList.setHasFixedSize(true);

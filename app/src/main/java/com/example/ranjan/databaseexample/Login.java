@@ -13,10 +13,14 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 public class Login extends AppCompatActivity {
     private AutoCompleteTextView user;
@@ -25,6 +29,7 @@ public class Login extends AppCompatActivity {
     private Button uregister;
     private Button ulogin;
     private ProgressDialog mLoginProgress;
+    private DatabaseReference mUserDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,8 @@ public class Login extends AppCompatActivity {
         ulogin = (Button) findViewById(R.id.login_button);
         mAuth = FirebaseAuth.getInstance();
         mLoginProgress = new ProgressDialog(this);
+        mUserDatabase = FirebaseDatabase.getInstance().getReference().child("user");
+
         ulogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,16 +76,31 @@ public class Login extends AppCompatActivity {
     }
 
     private void login_UserId(String email, String password) {
+
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
                     // Sign in success, update UI with the signed-in user's information
                     mLoginProgress.dismiss();
-                    Intent startIntent = new Intent(Login.this, Home.class);
-                    startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                    startActivity(startIntent);
-                    finish();
+
+
+                    String current_user_id = mAuth.getCurrentUser().getUid();
+                    String deviceToken = FirebaseInstanceId.getInstance().getToken();
+
+                    mUserDatabase.child(current_user_id).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+
+                            Intent startIntent = new Intent(Login.this, Home.class);
+                            startIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                            startActivity(startIntent);
+                            finish();
+
+                        }
+                    });
+
+
 
                 } else {
                     // If sign in fails, display a message to the user.
