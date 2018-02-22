@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -50,6 +51,10 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         getSupportActionBar().setTitle("Home");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        if(mAuth.getCurrentUser() != null) {
+            mdatabase = FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid());
+        }
+        //Tabs
         mViewPager = (ViewPager) findViewById(R.id.main_tabPager);
         mSectiosPagerAdaptor = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager.setAdapter(mSectiosPagerAdaptor);
@@ -123,7 +128,20 @@ public class Home extends AppCompatActivity implements NavigationView.OnNavigati
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser == null) {
             goToStart();
+        }else{
+            mdatabase.child("online").setValue("true");
         }
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+
+            mdatabase.child("online").setValue(ServerValue.TIMESTAMP);
+
+
+        }
+    }
 }

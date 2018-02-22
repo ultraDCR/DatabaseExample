@@ -50,6 +50,7 @@ import id.zelory.compressor.Compressor;
 public class SettingActivity extends AppCompatActivity {
     private DatabaseReference mUserDatabase;
     private FirebaseUser mCurrentUser;
+    private FirebaseAuth mAuth;
 
     //Android Layout
     private CircleImageView mDisplayImage;
@@ -81,6 +82,7 @@ public class SettingActivity extends AppCompatActivity {
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
         String uid = mCurrentUser.getUid();
 
+        mAuth = FirebaseAuth.getInstance();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("user").child(uid);
         mUserDatabase.keepSynced(true);
 
@@ -275,6 +277,26 @@ public class SettingActivity extends AppCompatActivity {
         return randomStringBuilder.toString();
     }
 */
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            mUserDatabase.child("online").setValue("true");
+        }
 
+
+    }
+
+    /*@Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            mUserDatabase.child("online").setValue(false);
+
+        }
+
+    }*/
 
 }

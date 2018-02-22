@@ -17,6 +17,8 @@ import android.widget.TextView;
 import com.firebase.ui.auth.data.model.User;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
@@ -32,7 +34,8 @@ public class UsersActivity extends AppCompatActivity {
 
     private RecyclerView mUserList;
 
-    private DatabaseReference mUserDatabase;
+    private DatabaseReference mUserDatabase,mdatabase;
+    private FirebaseAuth mAuth;
     private Query query;
 
     @Override
@@ -45,9 +48,10 @@ public class UsersActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("All Users");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        mAuth = FirebaseAuth.getInstance();
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("user");
         mUserDatabase.keepSynced(true);
-
+        mdatabase =FirebaseDatabase.getInstance().getReference().child("user").child(mAuth.getCurrentUser().getUid());
         mUserList = (RecyclerView) findViewById(R.id.users_list);
         mUserList.setHasFixedSize(true);
         mUserList.setLayoutManager(new LinearLayoutManager(this));
@@ -60,7 +64,10 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            mdatabase.child("online").setValue("true");
+        }
         FirebaseRecyclerOptions<Users> options =
                 new FirebaseRecyclerOptions.Builder<Users>()
                         .setQuery(mUserDatabase, Users.class)
@@ -132,5 +139,19 @@ public class UsersActivity extends AppCompatActivity {
             });
         }
     }
+
+
+
+
+   /* @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null) {
+            mdatabase.child("online").setValue(false);
+
+        }
+
+    }*/
 
 }
